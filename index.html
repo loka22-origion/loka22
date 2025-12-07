@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title> مدربين الورش🗣️  </title>
+  <style>
+    /* ----- خلفية الصفحة (استبدل المسار بالصورة اللي عندك) ----- */
+    :root{
+      --card-bg: rgba(18,18,22,0.72);
+      --card-border: rgba(255,255,255,0.06);
+      --input-bg: rgba(10,12,14,0.6);
+      --input-border: rgba(255,255,255,0.08);
+      --overlay: rgba(0,0,0,0.22);
+    }
+
+    html,body{height:100%;margin:0}
+    body{
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+      background-image: url('picture.png'); /* ضع مسار صورتك هنا */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color:#f6f6f6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      /* تفتيح بسيط للصورة إن احتجت */
+      filter: brightness(0.98) contrast(1.02);
+    }
+
+    /* غطاء شفاف فوق الخلفية لتسهيل قراءة النص */
+    .wrap::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background: var(--overlay);
+      pointer-events:none;
+      z-index:0;
+      backdrop-filter: none;
+    }
+    .wrap{ position:relative; z-index:1; max-width:1000px;margin:20px auto;padding:18px }
+
+    /* ----- واجهة المحتوى ----- */
+    .title{text-align:center;font-size:24px;font-weight:800;margin-bottom:14px;color:#fff}
+    .tabs{display:flex;gap:10px;justify-content:center;margin-bottom:18px;flex-wrap:wrap}
+    .tab-btn{
+      background:#ffd23f;color:#111;border:0;padding:10px 18px;border-radius:8px;cursor:pointer;font-weight:700;
+      box-shadow:0 6px 14px rgba(0,0,0,0.25);
+    }
+    .tab-btn.active{background:#f3bd1f;transform:translateY(-1px)}
+    .card{
+      background: var(--card-bg);
+      border:1px solid var(--card-border);
+      border-radius:10px;padding:18px;margin-bottom:18px;
+      display:none;
+      backdrop-filter: blur(6px) saturate(1.05);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+    }
+
+    .row{display:grid;grid-template-columns:1fr 2fr;gap:10px;align-items:center;margin-bottom:10px}
+    label{font-weight:700;font-size:14px;color:#fff}
+    input,select,textarea{
+      width:100%;padding:8px;border-radius:8px;border:1px solid var(--input-border);
+      background: var(--input-bg); color:#fff; font-size:14px; outline:none;
+    }
+    input::placeholder, textarea::placeholder{color:rgba(255,255,255,0.6)}
+    textarea{min-height:180px;resize:vertical}
+    .btns{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+    .btn{
+      background: linear-gradient(180deg,#ffd23f,#f3bd1f);
+      color:#111;border:0;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:700;
+      box-shadow:0 6px 14px rgba(0,0,0,0.25);
+    }
+    .sep{height:1px;background:var(--card-border);margin:14px 0}
+    @media (max-width:700px){.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="title">أختر نوع الدورة للبدء </div>
+
+    <!-- أزرار التبديل -->
+    <div class="tabs">
+      <button class="tab-btn" id="showBasic">دورة أساسية</button>
+      <button class="tab-btn" id="showSpecial">دورة استثنائية</button>
+    </div>
+
+    <!-- نموذج الدورة الأساسية -->
+    <section class="card" id="basicCard">
+      <h3>نموذج الأنتهاء من الدورة واعتماد النتائج وطلب تسليم رول (أساسية)</h3>
+      <div class="row"><label>رقم التسلسل</label><input id="sequenceBasic" type="number" placeholder="مثال: 5"></div>
+      <div class="row"><label>اسم الدورة</label>
+        <select id="courseNameBasic">
+          <option>الدليل الشامل</option>
+          <option>العمليات</option>
+          <option>ورشة التصنيع</option>
+          <option>خدمات الطرق</option>
+          <option>ورشة التزويد</option>
+        </select>
+      </div>
+      <div class="row"><label>رقم الدورة</label><input id="courseNumberBasic" type="text" placeholder="مثال: 12"></div>
+      <div class="row"><label>تم شرح الدورة من قبل (أدخل رقم أو معرف)</label><input id="explainerBasic" type="text" placeholder="ضع الكوبي ايدي للشارح "></div>
+      <div class="row"><label>تم تصحيح الاختبار من قبل (أدخل رقم أو معرف)</label><input id="correctorBasic" type="text" placeholder="ضع الكوبي ايدي لمصحح الاختبار "></div>
+      <div class="row"><label>المدربين المتفاعلين (أرقام بمسافة)</label><input id="trainersBasic" type="text" placeholder="ضع الكوبي ايدي للمدربين المتفاعلين"></div>
+      <div class="row"><label>باقي المدربين (أرقام بمسافة أو لايوجد)</label><input id="othersBasic" type="text" placeholder="ضع الكوبي ايدي لباقي المدربين او لايوجد"></div>
+      <div class="row"><label>رابط النتائج</label><input id="resultsBasic" type="url" placeholder="ضع رابط النتائج من روم النتائج"></div>
+
+      <div class="btns">
+        <button class="btn" id="createBasic">إنشاء</button>
+        <button class="btn" id="copyBasic">نسخ</button>
+      </div>
+
+      <div class="sep"></div>
+      <textarea id="outputBasic" readonly></textarea>
+    </section>
+
+    <!-- نموذج الدورة الاستثنائية -->
+    <section class="card" id="specialCard">
+      <h3>نموذج الأنتهاء من الدورة الاستثنائية</h3>
+      <div class="row"><label>رقم التسلسل</label><input id="sequenceSpecial" type="number" placeholder="مثال: 7"></div>
+      <div class="row"><label>اسم الدورة</label>
+        <select id="courseNameSpecial">
+          <option>الدليل الشامل</option>
+          <option>العمليات</option>
+          <option>ورشة التصنيع</option>
+          <option>خدمات الطرق</option>
+          <option>ورشة التزويد</option>
+        </select>
+      </div>
+      <div class="row"><label>تم إقامة الدورة للفني (أدخل رقم أو معرف)</label><input id="technicianSpecial" type="text" placeholder="ضع الكوبي ايدي للفني"></div>
+      <div class="row"><label>تم شرح الدورة من قبل المدرب (أدخل رقم أو معرف)</label><input id="explainerSpecial" type="text" placeholder="ضع الكوبي ايدي للشارح "></div>
+      <div class="row"><label>درجة الاختبار (اختياري 1-10)</label>
+        <select id="examSpecial">
+          <option value="">اختر درجة</option>
+          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+          <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+        </select>
+      </div>
+
+      <div class="btns">
+        <button class="btn" id="createSpecial">إنشاء</button>
+        <button class="btn" id="copySpecial">نسخ</button>
+      </div>
+
+      <div class="sep"></div>
+      <textarea id="outputSpecial" readonly></textarea>
+    </section>
+  </div>
+
+  <script>
+    // جدول التوقيع والاعتماد لكل دورة بصيغة <@id>
+    const sigMap = {
+      "الدليل الشامل":"<@1271182726179061915>",
+      "العمليات":"<@1240550089093677087>",
+      "ورشة التصنيع":"<@508028428830638085>",
+      "خدمات الطرق":"<@1059976190988910772>",
+      "ورشة التزويد":"<@571068478753341453>"
+    };
+
+    // دوال مساعدة لتنظيف وإحاطة المعرفات بصيغة <@id>
+    function toAngleSingle(val){
+      if(!val) return '';
+      const cleaned = String(val).trim().replace(/<@|>|@/g,'');
+      return `<@${cleaned}>`;
+    }
+    function toAngleList(val){
+      if(!val) return '';
+      if(val.trim().toLowerCase()==='لايوجد') return 'لايوجد';
+      return val.split(' ')
+                .map(s=>s.trim())
+                .filter(Boolean)
+                .map(s=>`<@${s.replace(/<@|>|@/g,'')}>`)
+                .join(' ');
+    }
+
+    // نسخ النص
+    function copyText(id){
+      const txt = document.getElementById(id).value;
+      if(!txt){ alert("لا يوجد نص لنسخه"); return; }
+      navigator.clipboard.writeText(txt).then(()=> alert("تم النسخ"));
+    }
+
+    // إنشاء نص النموذج الأساسي
+    function generateBasic(){
+      const seq = document.getElementById('sequenceBasic').value || '';
+      const course = document.getElementById('courseNameBasic').value || '';
+      const num = document.getElementById('courseNumberBasic').value || '';
+      const expl = toAngleSingle(document.getElementById('explainerBasic').value || '');
+      const corr = toAngleSingle(document.getElementById('correctorBasic').value || '');
+      const trainers = toAngleList(document.getElementById('trainersBasic').value || '');
+      const others = toAngleList(document.getElementById('othersBasic').value || '');
+      const url = document.getElementById('resultsBasic').value || '';
+      const sig = sigMap[course] || "<@571068478753341453>";
+
+      const text = `*** نموذج الأنتهاء من الدورة واعتماد النتائج وطلب تسليم رول ***
+
+\`- تم تعبية جداول رسوم الدورات في مجلد الخاص في دورة (${course}) رقم التسلسل (${seq}) قبل ارسال هاذا التقرير :\`
+
+*** \` نوع الدورة : \`( أساسية )***
+
+*** \` اسم الدورة : \` ( ${course} )***
+
+*** \` رقم الدورة : \` ( ${num} )***
+
+*** \`تم شرح الدورة من قبل  :\`   ( ${expl} )***
+
+*** \`تم تصحيح الاختبار من قبل  :\`  ( ${corr} )***
+
+*** \`المدربين المتفاعلين : \`***   ( ${trainers} )
+
+*** \` باقي المدربين :\`  ( ${others} )
+
+*** \`نوع الطلب : \`***   اعطاء رول ( ${course} )(${url})   
+
+*** \` توقيع واعتماد :\` ${sig} ***
+
+*** \` للعلم :\` <@1182445629721563177> ***
+
+\`\`\`diff
+- ملاحظه يتم ارفاق صوره الإداع المبلغ في الخزنه
+\`\`\``;
+
+      document.getElementById('outputBasic').value = text;
+    }
+
+    // إنشاء نص النموذج الاستثنائي
+    function generateSpecial(){
+      const seq = document.getElementById('sequenceSpecial').value || '';
+      const course = document.getElementById('courseNameSpecial').value || '';
+      const tech = document.getElementById('technicianSpecial').value || '';
+      const expl = document.getElementById('explainerSpecial').value || '';
+      const grade = document.getElementById('examSpecial').value || '';
+      const techMention = tech ? `<@${String(tech).trim().replace(/<@|>|@/g,'')}>` : '';
+      const explMention = expl ? `<@${String(expl).trim().replace(/<@|>|@/g,'')}>` : '';
+      const sig = sigMap[course] || "<@571068478753341453>";
+      const gradeText = grade ? ` ( ${grade}|10 )` : ' ( - )';
+
+      const text = `*** نموذج الأنتهاء من الدورة الاستثنائية ***
+
+\`- تم تعبية جداول رسوم الدورات في مجلد الدورة الاستثنائية في دورة (${course}) رقم التسلسل (${seq}) قبل ارسال هاذا التقرير :\`
+
+*** \` اسم الدورة : \` ( ${course} )***
+
+*** \` تم إقامه الدورة للفني : \` ${techMention}***
+
+*** \`تم شرح الدورة من قبل  :\`   ${explMention}***
+
+*** \`درجه الاختبار  :\`${gradeText}***
+
+*** \`نوع الطلب  : \`***   اعطاء رول ( ${course} )     
+   
+*** \` توقيع واعتماد :\` ${sig} ***`;
+
+      document.getElementById('outputSpecial').value = text;
+    }
+
+    // تبديل البوكسات وربط الأزرار
+    document.addEventListener('DOMContentLoaded', function(){
+      const basicBtn = document.getElementById('showBasic');
+      const specialBtn = document.getElementById('showSpecial');
+      const basicCard = document.getElementById('basicCard');
+      const specialCard = document.getElementById('specialCard');
+
+      function showCard(which){
+        if(which === 'basic'){
+          basicCard.style.display = 'block';
+          specialCard.style.display = 'none';
+          basicBtn.classList.add('active');
+          specialBtn.classList.remove('active');
+        } else {
+          basicCard.style.display = 'none';
+          specialCard.style.display = 'block';
+          specialBtn.classList.add('active');
+          basicBtn.classList.remove('active');
+        }
+      }
+
+      // عرض أساسي افتراضياً
+      showCard('basic');
+
+      // أحداث الأزرار
+      basicBtn.addEventListener('click', ()=> showCard('basic'));
+      specialBtn.addEventListener('click', ()=> showCard('special'));
+
+      document.getElementById('createBasic').addEventListener('click', generateBasic);
+      document.getElementById('copyBasic').addEventListener('click', ()=> copyText('outputBasic'));
+
+      document.getElementById('createSpecial').addEventListener('click', generateSpecial);
+      document.getElementById('copySpecial').addEventListener('click', ()=> copyText('outputSpecial'));
+    });
+  </script>
+</body>
+</html>
