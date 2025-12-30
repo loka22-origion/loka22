@@ -1,696 +1,647 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>مدربين الورش🗣️</title>
-  <style>
-    :root{
-      --card-bg: rgba(18,18,22,0.78);
-      --card-border: rgba(255,255,255,0.06);
-      --input-bg: rgba(10,12,14,0.6);
-      --input-border: rgba(255,255,255,0.08);
-      --overlay: rgba(0,0,0,0.22);
-      --accent: #ffd23f;
-      --accent-dark: #f3bd1f;
-      --yellow-box: #ffef9a;
-      --btn-gradient: linear-gradient(180deg,#ffd23f,#f3bd1f);
-      --muted: rgba(255,255,255,0.7);
-    }
-    html,body{height:100%;margin:0}
-    body{
-      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
-      background-image: url('picture.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      color:#f6f6f6;
-      filter: brightness(0.98) contrast(1.02);
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>  مـوقـع مـدربـيـن الـورش</title>
 
-    .wrap::before{content:""; position:fixed; inset:0; background:var(--overlay); pointer-events:none; z-index:0}
-    .wrap{position:relative; z-index:1; max-width:1100px; margin:20px auto; padding:18px}
+<style>
+  :root{
+    --bg-img: url('picture.png');
+    --overlay: rgba(0,0,0,0.46);
+    --card-bg-dark: #1a1a1c;
+    --card-border: rgba(255,255,255,0.06);
+    --accent: #ffd23f;
+    --accent-2: #f3bd1f;
+    --muted: rgba(255,255,255,0.72);
+    --glass: rgba(255,255,255,0.05);
+    --shadow: 0 14px 40px rgba(0,0,0,0.6);
+  }
 
-    .title{text-align:center; font-size:24px; font-weight:800; margin-bottom:14px; color:#fff}
-    .tabs{display:flex; gap:10px; justify-content:center; margin-bottom:18px; flex-wrap:wrap}
-    .tab-btn{background:var(--accent); color:#111; border:0; padding:10px 18px; border-radius:8px; cursor:pointer; font-weight:700; box-shadow:0 6px 14px rgba(0,0,0,0.25)}
-    .tab-btn.active{background:var(--accent-dark); transform:translateY(-1px)}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:"Segoe UI",Tahoma,Arial,sans-serif;
+    background-image:var(--bg-img);
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    color:#fff;
+  }
 
-    .card{
-      background:var(--card-bg);
-      border:1px solid var(--card-border);
-      border-radius:10px; padding:18px; margin-bottom:18px; display:none;
-      backdrop-filter: blur(6px) saturate(1.05);
-      box-shadow:0 10px 30px rgba(0,0,0,0.45)
-    }
-    .row{display:grid; grid-template-columns:1fr 2fr; gap:10px; align-items:center; margin-bottom:10px}
-    label{font-weight:700; font-size:14px; color:#fff}
-    input,select,textarea{
-      width:100%; padding:8px; border-radius:8px; border:1px solid var(--input-border);
-      background:var(--input-bg); color:#fff; font-size:14px; outline:none
-    }
-    textarea{min-height:160px; resize:vertical}
-    .btns{display:flex; gap:10px; margin-top:12px; flex-wrap:wrap}
-    .btn{background:var(--btn-gradient); color:#111; border:0; padding:10px 14px; border-radius:8px; cursor:pointer; font-weight:700; box-shadow:0 6px 14px rgba(0,0,0,0.25)}
-    .sep{height:1px; background:var(--card-border); margin:14px 0}
-    @media (max-width:800px){.row{grid-template-columns:1fr}}
+  .overlay{ position:fixed; inset:0; background:var(--overlay); z-index:0; }
 
-    /* زر النتائج - الآن لونه مثل باقي الأزرار */
-    .yellow-toggle{
-      display:inline-flex; align-items:center; justify-content:center;
-      width:64px; height:44px; border-radius:10px; background:var(--btn-gradient); color:#111; border:2px solid rgba(0,0,0,0.08);
-      cursor:pointer; font-weight:800; margin-left:8px;
-      box-shadow:0 8px 18px rgba(0,0,0,0.25);
-      transition: transform 140ms ease, box-shadow 140ms ease;
-    }
-    .yellow-toggle:active{ transform: translateY(1px) scale(0.995); box-shadow:0 6px 12px rgba(0,0,0,0.2) }
+  .app{ position:relative; z-index:1; max-width:1100px; margin:28px auto; padding:22px; }
 
-    /* بطاقة النتائج */
-    .results-card{
-      background:var(--card-bg);
-      border:1px solid var(--card-border);
-      border-radius:10px; padding:18px; margin-bottom:18px; display:none;
-      backdrop-filter: blur(6px) saturate(1.05);
-      box-shadow:0 10px 30px rgba(0,0,0,0.45);
-      transition: opacity 220ms ease, transform 220ms ease;
-    }
-    .results-card.show{ display:block; opacity:1; transform: translateY(0) }
-    .results-card.hide{ opacity:0; transform: translateY(-6px) }
+  .side-button{
+    position:fixed; right:8px; top:50%; transform:translateY(-50%);
+    width:56px; height:56px; border-radius:12px;
+    background:linear-gradient(180deg,var(--accent),var(--accent-2));
+    border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    box-shadow:var(--shadow); z-index:9999;
+  }
+  .side-button .lines{ width:22px; height:16px; position:relative; }
+  .side-button .lines span{ position:absolute; left:0; right:0; height:2px; background:#111; border-radius:2px; }
+  .side-button .lines span:nth-child(1){ top:0 } .side-button .lines span:nth-child(2){ top:7px } .side-button .lines span:nth-child(3){ top:14px }
 
-    .results-card label{color:#fff}
-    .small-note{font-size:13px; color:var(--muted); margin-top:6px}
+  .menu{
+    position:fixed; right:76px; top:50%; transform:translateY(-50%) translateX(8px);
+    width:360px; max-width:calc(100vw - 120px);
+    background:rgba(10,10,12,0.95); border:1px solid var(--card-border); border-radius:14px; padding:12px;
+    opacity:0; pointer-events:none; transition:0.2s ease; z-index:9999;
+  }
+  .menu.open{ opacity:1; pointer-events:auto; transform:translateY(-50%) translateX(0); }
 
-    /* درجات */
-    .grades{display:flex; flex-direction:column; gap:8px}
-    .grade-row{display:flex; gap:8px; align-items:center}
-    .grade-row input{flex:1}
+  .menu-section{ padding:6px; border-radius:10px; }
+  .menu-title{ display:flex; justify-content:space-between; font-weight:900; color:var(--accent); font-size:13px; }
+  .menu-list{ display:flex; flex-direction:column; gap:8px; margin-top:6px; }
+  .menu-item{ display:flex; justify-content:space-between; padding:10px; border-radius:10px; background:rgba(255,255,255,0.02); cursor:pointer; border:1px solid transparent; transition:0.15s; align-items:center; gap:8px; }
+  .menu-item:hover{ background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.1); }
+  .menu-item a{ color:#fff; text-decoration:none; font-weight:800; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .menu-copy{ background:transparent; border:1px solid rgba(255,255,255,0.1); color:var(--muted); padding:6px 8px; border-radius:8px; cursor:pointer; font-weight:800; }
 
-    /* دبوس الروابط */
-    .pin{position:fixed; top:18px; right:18px; z-index:9999; display:flex; align-items:center; gap:8px; direction:ltr}
-    .pin-button{width:48px; height:48px; border-radius:12px; background:var(--btn-gradient); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(0,0,0,0.35); color:#111; font-weight:800}
-    .pin-menu{
-      min-width:260px; max-width:420px; background: rgba(12,12,14,0.95); border:1px solid rgba(255,255,255,0.06);
-      border-radius:10px; padding:10px; box-shadow:0 12px 30px rgba(0,0,0,0.45); display:none; flex-direction:column; gap:8px; margin-right:8px; text-align:right;
-      transform: translateX(12px); transition: transform 220ms cubic-bezier(.2,.9,.2,1), opacity 220ms ease;
-      opacity:0;
-    }
-    .pin-menu.open{ display:flex; transform: translateX(0); opacity:1 }
-    /* حالة السحب التفاعلي: يظهر وكأنه مسحوب للخارج */
-    .pin-menu.pulled{ transform: translateX(-18px) rotate(-1deg); box-shadow:0 18px 40px rgba(0,0,0,0.5) }
-    .pin.pulling .pin-button{ transform: translateX(-8px) rotate(-2deg); transition: transform 120ms ease }
+  .menu-divider{ height:1px; background:rgba(255,255,255,0.1); margin:10px 0; }
 
-    .pin-tabs{display:flex; gap:6px; padding:6px}
-    .pin-tab{padding:6px 10px; border-radius:8px; background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.04); cursor:pointer; font-weight:700; font-size:13px}
-    .pin-tab.active{background:rgba(255,255,255,0.06)}
-    .pin-links{display:flex;flex-direction:column;gap:6px}
-    .pin-link-row{display:flex;align-items:center;gap:8px;justify-content:space-between}
-    .pin-links a{color:#fff;text-decoration:none;font-weight:700;word-break:break-word;flex:1}
-    .copy-link-btn{
-      background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);padding:6px 8px;border-radius:8px;cursor:pointer;font-weight:700;font-size:12px;
-      display:inline-flex;align-items:center;gap:6px;
-    }
-    .copy-link-btn:hover{background:rgba(255,255,255,0.03);color:#fff;border-color:rgba(255,255,255,0.12)}
-    .copy-icon{width:14px;height:14px;display:inline-block;transform:translateY(1px)}
-    .link-label{display:flex;gap:8px;align-items:center;flex:1}
-  </style>
+  .intro{ position:fixed; inset:0; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; z-index:9998; }
+  .intro-card{ width:min(720px,95%); background:#1a1a1c; border:1px solid var(--card-border); border-radius:14px; padding:20px; text-align:center; box-shadow:var(--shadow); }
+  .choice-btn{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); color:#111; border:0; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:900; min-width:140px; }
+  .choice-ghost{ background:transparent; border:1px solid rgba(255,255,255,0.2); color:#fff; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:800; }
+
+  .type-switch{ background:#000; border:1px solid rgba(255,255,255,0.1); padding:8px 10px; border-radius:10px; display:flex; align-items:center; gap:8px; }
+  .type-switch label{ color:#fff; font-weight:800; }
+  .type-select{ background:#000; color:#fff; border:1px solid rgba(255,255,255,0.12); padding:8px 10px; border-radius:8px; font-weight:800; }
+
+  .card{ background:#1a1a1c; border:1px solid rgba(255,255,255,0.06); border-radius:14px; padding:18px; box-shadow:var(--shadow); margin-bottom:20px; }
+  label{ font-weight:800; margin-bottom:6px; display:block; color:#fff; }
+  input, select, textarea{ width:100%; padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.03); color:#fff; box-sizing:border-box; }
+  textarea{ min-height:140px; }
+
+  .input-gray{
+    background:#2b2b2b;
+    color:#fff;
+    border:1px solid rgba(255,255,255,0.06);
+    padding:10px;
+    border-radius:10px;
+    width:100%;
+    box-sizing:border-box;
+  }
+
+  .select-dark{
+    background:#2b2b2b;
+    color:#fff;
+    border:1px solid rgba(255,255,255,0.12);
+    padding:10px;
+    border-radius:8px;
+    width:100%;
+    box-sizing:border-box;
+  }
+
+  .btn{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); color:#111; border:0; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:900; }
+  .btn-ghost{ background:transparent; border:1px solid rgba(255,255,255,0.2); color:#fff; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:800; }
+
+  #basicCard .row{ display:block; gap:0; }
+  #basicCard .row > div{ margin-bottom:12px; }
+
+  .actions{ display:flex; gap:10px; flex-wrap:wrap; }
+  .grade-label{ font-weight:900; color:var(--accent); margin-bottom:6px; }
+</style>
 </head>
+
 <body>
-  <!-- دبوس الروابط -->
-  <div class="pin" aria-hidden="false">
-    <button class="pin-button" id="pinToggle" title="روابط الدورات" aria-expanded="false">روابط</button>
+<div class="overlay"></div>
 
-    <div class="pin-menu" id="pinMenu" role="menu" aria-hidden="true">
-      <div class="pin-tabs" role="tablist" aria-label="أقسام الدبوس">
-        <button class="pin-tab active" data-section="explain">شرح الدورات</button>
-        <button class="pin-tab" data-section="tests">اختبارات الدورات</button>
-      </div>
+<div id="intro" class="intro">
+  <div class="intro-card">
+    <h2>اختر نوع النموذج للبدء</h2>
+    <p>يمكنك تغيير النوع لاحقاً من داخل الموقع</p>
 
-      <div class="pin-section" data-section="explain">
-        <div class="pin-links">
-          <div class="pin-link-row">
-            <div class="link-label"><a href="https://www.canva.com/design/DAGs6ZpXJZ4/8EczNf7jWa4grGNC1_JREQ/view" target="_blank" rel="noopener">شرح العمليات</a></div>
-            <button class="copy-link-btn" data-url="https://www.canva.com/design/DAGs6ZpXJZ4/8EczNf7jWa4grGNC1_JREQ/view" title="نسخ رابط شرح العمليات">نسخ
-              <span class="copy-icon">📋</span>
-            </button>
-          </div>
+    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+      <button class="choice-btn" data-select="basic">دورة أساسية</button>
+      <button class="choice-btn" data-select="special">دورة استثنائية</button>
+      <button class="choice-btn" data-select="results">النتائج</button>
+    </div>
 
-          <div class="pin-link-row">
-            <div class="link-label"><a href="https://www.canva.com/design/DAGutzHb2cc/ZLwcKlEfX4nu087DKCm6Rg/view" target="_blank" rel="noopener">شرح خدمات الطرق</a></div>
-            <button class="copy-link-btn" data-url="https://www.canva.com/design/DAGutzHb2cc/ZLwcKlEfX4nu087DKCm6Rg/view" title="نسخ رابط شرح خدمات الطرق">نسخ
-              <span class="copy-icon">📋</span>
-            </button>
-          </div>
+    <div style="margin-top:14px;">
+      <button id="introClose" class="choice-ghost">إغلاق</button>
+    </div>
+  </div>
+</div>
 
-          <div class="pin-link-row">
-            <div class="link-label"><a href="https://www.canva.com/design/DAGsZ5eHaC0/RbIkYJ-3c14h-uQPWNa7qw/view" target="_blank" rel="noopener">شرح ورشة التصنيع</a></div>
-            <button class="copy-link-btn" data-url="https://www.canva.com/design/DAGsZ5eHaC0/RbIkYJ-3c14h-uQPWNa7qw/view" title="نسخ رابط شرح ورشة التصنيع">نسخ
-              <span class="copy-icon">📋</span>
-            </button>
-          </div>
+<button id="sideBtn" class="side-button" title="قائمة الروابط">
+  <span class="lines"><span></span><span></span><span></span></span>
+</button>
 
-          <div class="pin-link-row">
-            <div class="link-label"><a href="https://www.canva.com/design/DAGs6S2N9oQ/yOKZcDlmq_uPsFzL-ZvZwg/view" target="_blank" rel="noopener">شرح ورشة التزويد</a></div>
-            <button class="copy-link-btn" data-url="https://www.canva.com/design/DAGs6S2N9oQ/yOKZcDlmq_uPsFzL-ZvZwg/view" title="نسخ رابط شرح ورشة التزويد">نسخ
-              <span class="copy-icon">📋</span>
-            </button>
-          </div>
-
-          <div class="pin-link-row">
-            <div class="link-label"><a href="https://www.canva.com/design/DAGvSVLyjNc/FF6lXkGowebTEMz84JUhWQ/view" target="_blank" rel="noopener">شرح البحث والإنقاذ</a></div>
-            <button class="copy-link-btn" data-url="https://www.canva.com/design/DAGvSVLyjNc/FF6lXkGowebTEMz84JUhWQ/view" title="نسخ رابط شرح البحث والإنقاذ">نسخ
-              <span class="copy-icon">📋</span>
-            </button>
-          </div>
-
-          <div class="pin-link-row">
-            <div class="link-label"><a href="https://www.canva.com/design/DAGtKZe7JW8/hgWzX9YAkCUTxIm3-m0mMw/view" target="_blank" rel="noopener">شرح الدليل الشامل</a></div>
-            <button class="copy-link-btn" data-url="https://www.canva.com/design/DAGtKZe7JW8/hgWzX9YAkCUTxIm3-m0mMw/view" title="نسخ رابط شرح الدليل الشامل">نسخ
-              <span class="copy-icon">📋</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="pin-section" data-section="tests" style="display:none">
-        <div class="pin-links">
-          <div class="pin-link-row">
-            <div class="link-label"><a href="https://docs.google.com/forms/d/e/1FAIpQLSeusy4R53UNc5tTKKEIi8KE_zXxMRJxkJm5CSw8WcYuZU2kCw/viewform?usp=dialog" target="_blank" rel="noopener">اختبار دورة العمليات</a></div>
-            <button class="copy-link-btn" data-url="https://docs.google.com/forms/d/e/1FAIpQLSeusy4R53UNc5tTKKEIi8KE_zXxMRJxkJm5CSw8WcYuZU2kCw/viewform?usp=dialog" title="نسخ رابط اختبار دورة العمليات">نسخ
-              <span class="copy-icon">📋</span>
-            </button>
-          </div>
-
-          <div class="pin-link-row">
-            <div class="link-label"><a href="https://docs.google.com/forms/d/1sOiQ93J2q5lgzm7m5bVkYb3lKjHr7nCU5cx6fQEaICY/edit" target="_blank" rel="noopener">اختبار دورة ورشة التصنيع</a></div>
-            <button class="copy-link-btn" data-url="https://docs.google.com/forms/d/1sOiQ93J2q5lgzm7m5bVkYb3lKjHr7nCU5cx6fQEaICY/edit" title="نسخ رابط اختبار ورشة التصنيع">نسخ
-              <span class="copy-icon">📋</span>
-            </button>
-          </div>
-
-          <div class="pin-link-row">
-            <div class="link-label"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdXFnId2b-MxfdLr8oebJnQTbdjI-SN4L6Y1gXBNjJiPbGn1A/viewform?usp=dialog" target="_blank" rel="noopener">اختبار دورة خدمات الطرق</a></div>
-            <button class="copy-link-btn" data-url="https://docs.google.com/forms/d/e/1FAIpQLSdXFnId2b-MxfdLr8oebJnQTbdjI-SN4L6Y1gXBNjJiPbGn1A/viewform?usp=dialog" title="نسخ رابط اختبار خدمات الطرق">نسخ
-              <span class="copy-icon">📋</span>
-            </button>
-          </div>
-
-          <div class="pin-link-row">
-            <div class="link-label"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdXpfhNYO5qdkb3d0v_NkwOeKRUTjNxYWW9ptllPWswXmnqFg/viewform?usp=dialog" target="_blank" rel="noopener">اختبار دورة التعديل والتزويد</a></div>
-            <button class="copy-link-btn" data-url="https://docs.google.com/forms/d/e/1FAIpQLSdXpfhNYO5qdkb3d0v_NkwOeKRUTjNxYWW9ptllPWswXmnqFg/viewform?usp=dialog" title="نسخ رابط اختبار التعديل والتزويد">نسخ
-              <span class="copy-icon">📋</span>
-            </button>
-          </div>
-
-          <div class="pin-link-row">
-            <div class="link-label"><a href="https://docs.google.com/forms/d/e/1FAIpQLSd66idu5DuEGXjd1xFS0JFnuEto9LUi6V24q47hwctUC0Lrug/viewform" target="_blank" rel="noopener">اختبار دورة البحث والإنقاذ</a></div>
-            <button class="copy-link-btn" data-url="https://docs.google.com/forms/d/e/1FAIpQLSd66idu5DuEGXjd1xFS0JFnuEto9LUi6V24q47hwctUC0Lrug/viewform" title="نسخ رابط اختبار البحث والإنقاذ">نسخ
-              <span class="copy-icon">📋</span>
-            </button>
-          </div>
-        </div>
-      </div>
+<div id="menu" class="menu" aria-hidden="true">
+  <div class="menu-section">
+    <div class="menu-title"><span>الشروحات</span></div>
+    <div class="menu-list">
+      <div class="menu-item"><a href="https://www.canva.com/design/DAGs6ZpXJZ4/8EczNf7jWa4grGNC1_JREQ/view" target="_blank" rel="noopener">شرح العمليات</a><button class="menu-copy" data-url="https://www.canva.com/design/DAGs6ZpXJZ4/8EczNf7jWa4grGNC1_JREQ/view">نسخ</button></div>
+      <div class="menu-item"><a href="https://www.canva.com/design/DAGutzHb2cc/ZLwcKlEfX4nu087DKCm6Rg/view" target="_blank" rel="noopener">شرح خدمات الطرق</a><button class="menu-copy" data-url="https://www.canva.com/design/DAGutzHb2cc/ZLwcKlEfX4nu087DKCm6Rg/view">نسخ</button></div>
+      <div class="menu-item"><a href="https://www.canva.com/design/DAGsZ5eHaC0/RbIkYJ-3c14h-uQPWNa7qw/view" target="_blank" rel="noopener">شرح ورشة التصنيع</a><button class="menu-copy" data-url="https://www.canva.com/design/DAGsZ5eHaC0/RbIkYJ-3c14h-uQPWNa7qw/view">نسخ</button></div>
+      <div class="menu-item"><a href="https://www.canva.com/design/DAGs6S2N9oQ/yOKZcDlmq_uPsFzL-ZvZwg/view" target="_blank" rel="noopener">شرح ورشة التزويد</a><button class="menu-copy" data-url="https://www.canva.com/design/DAGs6S2N9oQ/yOKZcDlmq_uPsFzL-ZvZwg/view">نسخ</button></div>
+      <div class="menu-item"><a href="https://www.canva.com/design/DAGvSVLyjNc/FF6lXkGowebTEMz84JUhWQ/view" target="_blank" rel="noopener">شرح البحث والإنقاذ</a><button class="menu-copy" data-url="https://www.canva.com/design/DAGvSVLyjNc/FF6lXkGowebTEMz84JUhWQ/view">نسخ</button></div>
+      <div class="menu-item"><a href="https://www.canva.com/design/DAGtKZe7JW8/hgWzX9YAkCUTxIm3-m0mMw/view" target="_blank" rel="noopener">شرح الدليل الشامل</a><button class="menu-copy" data-url="https://www.canva.com/design/DAGtKZe7JW8/hgWzX9YAkCUTxIm3-m0mMw/view">نسخ</button></div>
     </div>
   </div>
 
-  <div class="wrap">
-    <div class="title">اختر نوع الدورة للبدء </div>
+  <div class="menu-divider"></div>
 
-    <div class="tabs">
-      <button class="tab-btn" id="showBasic">دورة أساسية</button>
-      <button class="tab-btn" id="showSpecial">دورة استثنائية</button>
+  <div class="menu-section">
+    <div class="menu-title"><span>الاختبارات</span></div>
+    <div class="menu-list">
+      <div class="menu-item"><a href="https://docs.google.com/forms/d/e/1FAIpQLSeusy4R53UNc5tTKKEIi8KE_zXxMRJxkJm5CSw8WcYuZU2kCw/viewform?usp=dialog" target="_blank" rel="noopener">اختبار دورة العمليات</a><button class="menu-copy" data-url="https://docs.google.com/forms/d/e/1FAIpQLSeusy4R53UNc5tTKKEIi8KE_zXxMRJxkJm5CSw8WcYuZU2kCw/viewform?usp=dialog">نسخ</button></div>
+      <div class="menu-item"><a href="https://docs.google.com/forms/d/1sOiQ93J2q5lgzm7m5bVkYb3lKjHr7nCU5cx6fQEaICY/edit" target="_blank" rel="noopener">اختبار ورشة التصنيع</a><button class="menu-copy" data-url="https://docs.google.com/forms/d/1sOiQ93J2q5lgzm7m5bVkYb3lKjHr7nCU5cx6fQEaICY/edit">نسخ</button></div>
+      <div class="menu-item"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdXFnId2b-MxfdLr8oebJnQTbdjI-SN4L6Y1gXBNjJiPbGn1A/viewform?usp=dialog" target="_blank" rel="noopener">اختبار خدمات الطرق</a><button class="menu-copy" data-url="https://docs.google.com/forms/d/e/1FAIpQLSdXFnId2b-MxfdLr8oebJnQTbdjI-SN4L6Y1gXBNjJiPbGn1A/viewform?usp=dialog">نسخ</button></div>
+      <div class="menu-item"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdXpfhNYO5qdkb3d0v_NkwOeKRUTjNxYWW9ptllPWswXmnqFg/viewform?usp=dialog" target="_blank" rel="noopener">اختبار التعديل والتزويد</a><button class="menu-copy" data-url="https://docs.google.com/forms/d/e/1FAIpQLSdXpfhNYO5qdkb3d0v_NkwOeKRUTjNxYWW9ptllPWswXmnqFg/viewform?usp=dialog">نسخ</button></div>
+      <div class="menu-item"><a href="https://docs.google.com/forms/d/e/1FAIpQLSd66idu5DuEGXjd1xFS0JFnuEto9LUi6V24q47hwctUC0Lrug/viewform" target="_blank" rel="noopener">اختبار البحث والإنقاذ</a><button class="menu-copy" data-url="https://docs.google.com/forms/d/e/1FAIpQLSd66idu5DuEGXjd1xFS0JFnuEto9LUi6V24q47hwctUC0Lrug/viewform">نسخ</button></div>
     </div>
-
-    <!-- بطاقة أساسية مع زر "النتائج" -->
-    <section class="card" id="basicCard">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-        <h3 style="margin:0">نموذج الأنتهاء من الدورة واعتماد النتائج وطلب تسليم رول (أساسية)</h3>
-        <div style="display:flex;align-items:center">
-          <button class="yellow-toggle" id="openResultsFromBasic" title="فتح/إغلاق نموذج النتائج">النتائج</button>
-        </div>
-      </div>
-
-      <div class="row"><label>رقم التسلسل من جدول الرسوم</label><input id="sequenceBasic" type="number" placeholder="مثال: 5"></div>
-      <div class="row"><label>اسم الدورة</label>
-        <select id="courseNameBasic">
-          <option>الدليل الشامل</option>
-          <option>العمليات</option>
-          <option>ورشة التصنيع</option>
-          <option>خدمات الطرق</option>
-          <option>ورشة التزويد</option>
-          <option>دورة مدربين الورش</option>
-          <option>دورة الشوؤن الأدارية</option>
-          <option>شوؤن توظيف الكراج</option>
-          <option>البحث والإنقاذ</option>
-        </select>
-      </div>
-      <div class="row"><label>رقم الدورة</label><input id="courseNumberBasic" type="text" placeholder="مثال: 12"></div>
-      <div class="row"><label>تم شرح الدورة من قبل</label><input id="explainerBasic" type="text" placeholder="ضع الكوبي ايدي لشارح الدورة"></div>
-      <div class="row"><label>تم تصحيح الاختبار من قبل</label><input id="correctorBasic" type="text" placeholder="ضع الكوبي ايدي لمصحح الاختبار"></div>
-      <div class="row"><label>المدربين المتفاعلين</label><input id="trainersBasic" type="text" placeholder=" ضع الكوبي ايدي للمدرب في حال وجود اكثر من مدرب افصل بمسافة  "></div>
-      <div class="row"><label>باقي المدربين</label><input id="othersBasic" type="text" placeholder=" ضع الكوبي ايدي للمدرب في حاول وجود اكثر من مدرب افصل بمسافة أو لايوجد"></div>
-      <div class="row"><label>رابط النتائج</label><input id="resultsBasic" type="url" placeholder="ضع رابط النتائج من روم النتائج او لايوجد اذا كانت الدورة الدليل الشامل"></div>
-
-      <div class="btns">
-        <button class="btn" id="createBasic">إنشاء</button>
-        <button class="btn" id="copyBasic">نسخ</button>
-      </div>
-
-      <div class="sep"></div>
-      <textarea id="outputBasic" readonly></textarea>
-    </section>
-
-    <!-- بطاقة الاستثنائية -->
-    <section class="card" id="specialCard">
-      <h3 style="margin:0 0 8px 0">نموذج الأنتهاء من الدورة الاستثنائية</h3>
-
-      <div class="row"><label>رقم التسلسل من جدول الرسوم</label><input id="sequenceSpecial" type="number" placeholder="مثال: 7"></div>
-      <div class="row"><label>اسم الدورة</label>
-        <select id="courseNameSpecial">
-          <option>الدليل الشامل</option>
-          <option>العمليات</option>
-          <option>ورشة التصنيع</option>
-          <option>خدمات الطرق</option>
-          <option>ورشة التزويد</option>
-          <option>دورة مدربين الورش</option>
-          <option>دورة الشوؤن الأدارية</option>
-          <option>شوؤن توظيف الكراج</option>
-          <option>البحث والإنقاذ</option>
-        </select>
-      </div>
-      <div class="row"><label>تم إقامة الدورة للفني</label><input id="technicianSpecial" type="text" placeholder="ضع الكوبي ايدي للفني "></div>
-      <div class="row"><label>تم شرح الدورة من قبل المدرب</label><input id="explainerSpecial" type="text" placeholder="ضع الكوبي ايدي للمدرب شارح الدورة"></div>
-
-      <div class="row">
-        <label>درجة الاختبار (اختياري)</label>
-        <div>
-          <select id="examSpecial">
-            <option value="">اختر درجة</option>
-            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-            <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
-          </select>
-          <input id="examSpecialText" type="text" placeholder="أو اكتب: لايوجد في حال ليس للدورة اختبار" style="margin-top:8px;">
-        </div>
-      </div>
-
-      <div class="btns">
-        <button class="btn" id="createSpecial">إنشاء</button>
-        <button class="btn" id="copySpecial">نسخ</button>
-      </div>
-
-      <div class="sep"></div>
-      <textarea id="outputSpecial" readonly></textarea>
-    </section>
-
-    <!-- بطاقة النتائج -->
-    <section class="results-card card" id="resultsCard">
-      <h3 style="margin-top:0">النتائج</h3>
-
-      <div class="row"><label>اسم الدورة (اختياري)</label>
-        <select id="courseNameResults">
-          <option value="">-- اختر الدورة --</option>
-          <option>الدليل الشامل</option>
-          <option>العمليات</option>
-          <option>ورشة التصنيع</option>
-          <option>خدمات الطرق</option>
-          <option>ورشة التزويد</option>
-          <option>دورة مدربين الورش</option>
-          <option>دورة الشوؤن الأدارية</option>
-          <option>شوؤن توظيف الكراج</option>
-          <option>البحث والإنقاذ</option>
-        </select>
-      </div>
-
-      <div class="row"><label>رقم الدورة</label><input id="courseNumberResults" type="text" placeholder="أدخل رقم الدورة"></div>
-
-      <div style="margin-top:8px; font-weight:800; color:#fff">الأشخاص الحاصلين على الدرجات (أدخل أرقام مفصولة بمسافة)</div>
-      <div class="grades" style="margin-top:8px">
-        <div class="grade-row">
-          <div style="min-width:100px; font-weight:800; color:#fff">***10 / 10***</div>
-          <input id="grade10" type="text" placeholder="مثال: 1069596605080162397  أو اكتب: لايوجد">
-        </div>
-        <div class="grade-row">
-          <div style="min-width:100px; font-weight:800; color:#fff">***10 / 09***</div>
-          <input id="grade9" type="text" placeholder="مثال: 1069596605080162397 أو اكتب: لايوجد">
-        </div>
-        <div class="grade-row">
-          <div style="min-width:100px; font-weight:800; color:#fff">***10 / 08***</div>
-          <input id="grade8" type="text" placeholder="مثال: 1069596605080162397  أو اكتب: لايوجد">
-        </div>
-        <div class="grade-row">
-          <div style="min-width:100px; font-weight:800; color:#fff">***10 / 07***</div>
-          <input id="grade7" type="text" placeholder="مثال:  1069596605080162397 أو اكتب: لايوجد">
-        </div>
-      </div>
-
-      <div class="sep"></div>
-
-      <div class="row"><label>شارح الدورة</label><input id="resultsExplainer" type="text" placeholder="  ضع الكوبي ايدي للمدرب شارح الدورة "></div>
-      <div class="row"><label>مسؤول الدورة</label><input id="resultsResponsible" type="text" placeholder="  ضع الكوبي ايدي لمسوؤل الدورة  "></div>
-      <div class="row"><label>نائب مسؤول الدورة</label><input id="resultsDeputy" type="text" placeholder="  ضع الكوبي ايدي لنائب مسؤول الدورة  "></div>
-
-      <div class="small-note">اكتب "لايوجد" لحذف خانة الدرجة من الرسالة نهائياً. الأرقام تتحول لأسطر بصيغة &lt;@ID&gt;.</div>
-
-      <div class="btns" style="margin-top:12px">
-        <button class="btn" id="createResults">إنشاء النتائج</button>
-        <button class="btn" id="copyResults">نسخ</button>
-      </div>
-
-      <div class="sep"></div>
-      <textarea id="outputResults" readonly></textarea>
-    </section>
-
   </div>
 
-  <script>
-    // خريطة التوقيع لكل دورة
-    const sigMap = {
-      "الدليل الشامل":"<@1271182726179061915>",
-      "العمليات":"<@1240550089093677087>",
-      "ورشة التصنيع":"<@508028428830638085>",
-      "خدمات الطرق":"<@1059976190988910772>",
-      "ورشة التزويد":"<@571068478753341453>",
-      "دورة مدربين الورش":"<@1243196849372790916>",
-      "دورة الشوؤن الأدارية":"<@1140931533285367852>",
-      "شوؤن توظيف الكراج":"<@1271182726179061915>",
-      "البحث والإنقاذ":"<@1243196849372790916>"
-    };
+  <div class="menu-divider"></div>
 
-    // تحويل أرقام بمسافات إلى أسطر <@ID>
-    function formatMentionsVertical(input){
-      if(!input) return '';
-      const raw = input.trim();
-      if(!raw) return '';
-      if(raw.toLowerCase().replace(/\s+/g,'') === 'لايوجد') return 'NO_FIELD';
-      const parts = raw.split(/\s+/).filter(Boolean);
-      return parts.map(p => `<@${String(p).replace(/<@|>|@/g,'')}>`).join('\n');
-    }
-    // تغليف مفرد كـ <@ID>
-    function wrapSingleAsAngle(val){
-      if(!val) return '';
-      const cleaned = String(val).trim().replace(/<@|>|@/g,'');
-      if(!cleaned) return '';
-      return `<@${cleaned}>`;
-    }
-    // نسخ نص
-    function copyText(id){
-      const txt = document.getElementById(id).value;
-      if(!txt){ alert("لا يوجد نص لنسخه"); return; }
-      navigator.clipboard.writeText(txt).then(()=> alert("تم النسخ"));
-    }
+  <div class="menu-section">
+    <div class="menu-title"><span>روابط إضافية</span></div>
+    <div class="menu-list">
+      <div class="menu-item"><a href="https://xhhp1.github.io/MechanicAF/" target="_blank" rel="noopener">موقع الشوؤن الادارية</a><button class="menu-copy" data-url="https://xhhp1.github.io/MechanicAF/">نسخ</button></div>
+      <div class="menu-item"><a href="https://docs.google.com/spreadsheets/d/1K79WxPJarDhtjEscZDwjPojcYYbvWkDUMK_HXMMdJGE/edit?gid=1734254035#gid=1734254035" target="_blank" rel="noopener">موقع مدربين الورش</a><button class="menu-copy" data-url="https://docs.google.com/spreadsheets/d/1K79WxPJarDhtjEscZDwjPojcYYbvWkDUMK_HXMMdJGE/edit?gid=1734254035#gid=1734254035">نسخ</button></div>
+    </div>
+  </div>
+</div>
 
-    // إنشاء نص النتائج
-    function generateResults(prefillCourse='', prefillCourseNumber=''){
-      const course = document.getElementById('courseNameResults').value || prefillCourse || '';
-      const courseNum = document.getElementById('courseNumberResults').value || prefillCourseNumber || '';
+<div class="app">
+  <div class="header" style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>نماذج الدورات</h2>
 
-      const g10 = formatMentionsVertical(document.getElementById('grade10').value || '');
-      const g9  = formatMentionsVertical(document.getElementById('grade9').value || '');
-      const g8  = formatMentionsVertical(document.getElementById('grade8').value || '');
-      const g7  = formatMentionsVertical(document.getElementById('grade7').value || '');
+    <div class="type-switch">
+      <label>نوع النموذج</label>
+      <select id="typeSelect" class="type-select select-dark">
+        <option value="none">-- اختر --</option>
+        <option value="basic">أساسية</option>
+        <option value="special">استثنائية</option>
+        <option value="results">النتائج</option>
+      </select>
+    </div>
+  </div>
 
-      const explMention = wrapSingleAsAngle(document.getElementById('resultsExplainer').value || '');
-      const respRaw = document.getElementById('resultsResponsible').value || '';
-      const depRaw  = document.getElementById('resultsDeputy').value || '';
-      const respMentions = (respRaw && respRaw.trim().toLowerCase() !== 'لايوجد') ? respRaw.split(/\s+/).map(s=>`<@${s.replace(/<@|>|@/g,'')}>`).join(' ') : '';
-      const depMentions  = (depRaw && depRaw.trim().toLowerCase() !== 'لايوجد') ? depRaw.split(/\s+/).map(s=>`<@${s.replace(/<@|>|@/g,'')}>`).join(' ') : '';
+  <!-- بطاقة الدورة الأساسية -->
+  <section id="basicCard" class="card" style="display:none;">
+    <h3>نموذج الانتهاء من الدورة (أساسية)</h3>
 
-      function block(label, formatted){
-        if(!formatted || formatted==='NO_FIELD') return '';
-        return `${label}\n${formatted}\n\n`;
+    <div class="row">
+      <div>
+        <label>رقم التسلسل من جدول الرسوم</label>
+        <input id="sequenceBasic" class="input-gray" type="number" placeholder="مثال: 5">
+      </div>
+
+      <div>
+        <label>اسم الدورة</label>
+        <select id="courseNameBasic" class="select-dark">
+          <option value="">-- اختر --</option>
+          <option>الدليل الشامل</option>
+          <option>العمليات</option>
+          <option>ورشة التصنيع</option>
+          <option>خدمات الطرق</option>
+          <option>ورشة التزويد</option>
+          <option>دورة مدربين الورش</option>
+          <option>دورة الشوؤن الأدارية</option>
+          <option>شوؤن توظيف الكراج</option>
+          <option>البحث والإنقاذ</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label>رقم الدورة</label>
+        <input id="numBasic" class="input-gray" type="text" placeholder="مثال: 7">
+      </div>
+
+      <div>
+        <label>رابط النتائج</label>
+        <input id="urlBasic" class="input-gray" type="text" placeholder="ضع رابط النتائج هنا">
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label>تم شرح الدورة من قبل</label>
+        <input id="explBasic" class="input-gray" type="text" placeholder="ضع الكوبي ايدي للمدرب شارح الدورة       ">
+      </div>
+
+      <div>
+        <label>تم تصحيح الاختبار من قبل</label>
+        <input id="corrBasic" class="input-gray" type="text" placeholder="ضع الكوبي ايدي لمصحح الاختبار          ">
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label>المدربين متفاعلين</label>
+        <input id="trainersBasic" class="input-gray" type="text" placeholder="ضع الكوبي ايدي للمدربين المتفاعلين مفصولة بمسافة في حال وجود اكثر من مدرب">
+      </div>
+
+      <div>
+        <label>باقي المدربين</label>
+        <input id="othersBasic" class="input-gray" type="text" placeholder="ضع الكوبي ايدي لباقي المدربين مفصولة بمسافة في حال وجود اكثر من مدرب">
+      </div>
+    </div>
+
+    <div class="actions" style="margin-top:14px;">
+      <button id="createBasic" class="btn">إنشاء</button>
+      <button id="copyBasic" class="btn-ghost">نسخ</button>
+    </div>
+
+    <div class="sep" style="height:1px; background:rgba(255,255,255,0.06); margin:14px 0;"></div>
+    <textarea id="outputBasic" readonly></textarea>
+  </section>
+
+  <!-- بطاقة الدورة الاستثنائية -->
+  <section id="specialCard" class="card" style="display:none;">
+    <h3>نموذج الانتهاء من الدورة (استثنائية)</h3>
+
+    <div class="row" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div>
+        <label>رقم التسلسل من جدول الرسوم</label>
+        <input id="sequenceSpecial" type="number" placeholder="مثال: 7" class="input-gray">
+      </div>
+
+      <div>
+        <label>اسم الدورة</label>
+        <select id="courseNameSpecial" class="select-dark">
+          <option value="">-- اختر --</option>
+          <option>الدليل الشامل</option>
+          <option>العمليات</option>
+          <option>ورشة التصنيع</option>
+          <option>خدمات الطرق</option>
+          <option>ورشة التزويد</option>
+          <option>دورة مدربين الورش</option>
+          <option>دورة الشوؤن الأدارية</option>
+          <option>شوؤن توظيف الكراج</option>
+          <option>البحث والإنقاذ</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;">
+      <label>تم إقامة الدورة للفني</label>
+      <input id="techSpecial" class="input-gray" type="text" placeholder="ضع الكوبي ايدي للفني">
+    </div>
+
+    <div style="margin-top:12px;">
+      <label>تم شرح الدورة من قبل المدرب</label>
+      <input id="explSpecial" class="input-gray" type="text" placeholder="ضع الكوبي ايدي للمدرب شارح الدورة  ">
+    </div>
+
+    <div style="margin-top:12px;">
+      <label>درجة الاختبار (اختياري)</label>
+      <select id="gradeSpecial" class="select-dark">
+        <option value="">-- اختر درجة --</option>
+        <option>10 / 10</option>
+        <option>10 / 09</option>
+        <option>10 / 08</option>
+        <option>10 / 07</option>
+        <option>لايوجد</option>
+      </select>
+    </div>
+
+    <div class="actions" style="margin-top:14px;">
+      <button id="createSpecial" class="btn">إنشاء</button>
+      <button id="copySpecial" class="btn-ghost">نسخ</button>
+    </div>
+
+    <div class="sep" style="height:1px; background:rgba(255,255,255,0.06); margin:14px 0;"></div>
+    <textarea id="outputSpecial" readonly></textarea>
+  </section>
+
+  <!-- بطاقة النتائج -->
+  <section id="resultsCard" class="card" style="display:none;">
+    <h3>نموذج النتائج</h3>
+
+    <div style="margin-top:8px;">
+      <label>اسم الدورة</label>
+      <select id="courseNameResults" class="select-dark">
+        <option value="">-- اختر --</option>
+        <option>الدليل الشامل</option>
+        <option>العمليات</option>
+        <option>ورشة التصنيع</option>
+        <option>خدمات الطرق</option>
+        <option>ورشة التزويد</option>
+        <option>دورة مدربين الورش</option>
+        <option>دورة الشوؤن الأدارية</option>
+        <option>شوؤن توظيف الكراج</option>
+        <option>البحث والإنقاذ</option>
+      </select>
+
+      <label style="margin-top:10px;">رقم الدورة</label>
+      <input id="resultsNum" class="input-gray" type="text" placeholder="مثال: 7   ">
+    </div>
+
+    <div class="grades" style="margin-top:12px;">
+      <div style="margin-top:8px;">
+        <div class="grade-label">***10 / 10***</div>
+        <input id="grade10" class="select-dark" type="text" placeholder="مثال: 1069596605080162397 893986969456111617  أو اكتب: لايوجد">
+      </div>
+      <div style="margin-top:8px;">
+        <div class="grade-label">***10 / 09***</div>
+        <input id="grade9" class="select-dark" type="text" placeholder="مثال:  893986969456111617 1069596605080162397  أو اكتب: لايوجد">
+      </div>
+      <div style="margin-top:8px;">
+        <div class="grade-label">***10 / 08***</div>
+        <input id="grade8" class="select-dark" type="text" placeholder="مثال: 893986969456111617 1069596605080162397  أو اكتب: لايوجد">
+      </div>
+      <div style="margin-top:8px;">
+        <div class="grade-label">***10 / 07***</div>
+        <input id="grade7" class="select-dark" type="text" placeholder="مثال:  893986969456111617 أو اكتب: لايوجد">
+      </div>
+    </div>
+
+    <div style="margin-top:12px;">
+      <label>شارح الدورة</label>
+      <input id="resultsExplainer" class="select-dark" type="text" placeholder="ضع الكوبي ايدي لشارح الدورة">
+
+      <label style="margin-top:8px;">مسؤول الدورة</label>
+      <input id="resultsResponsible" class="select-dark" type="text" placeholder="ضع الكوبي ايدي لمسوؤل الدورة ">
+
+      <label style="margin-top:8px;">نائب مسؤول الدورة</label>
+      <input id="resultsDeputy" class="select-dark" type="text" placeholder="ضع الكوبي ايدي لنائب مسوؤل الدورة (في حال وجود اكثر من مسوؤل ضع الكوبي ايدي مفصول بمسافة) ">
+    </div>
+
+    <div class="actions" style="margin-top:14px;">
+      <button id="createResults" class="btn">إنشاء النتائج</button>
+      <button id="copyResults" class="btn-ghost">نسخ</button>
+    </div>
+
+    <div class="sep" style="height:1px; background:rgba(255,255,255,0.06); margin:14px 0;"></div>
+    <textarea id="outputResults" readonly></textarea>
+  </section>
+</div>
+
+<script>
+  const sigMap = {
+    "الدليل الشامل":"<@1271182726179061915>",
+    "العمليات":"<@1240550089093677087>",
+    "ورشة التصنيع":"<@508028428830638085>",
+    "خدمات الطرق":"<@1059976190988910772>",
+    "ورشة التزويد":"<@571068478753341453>",
+    "دورة مدربين الورش":"<@1243196849372790916>",
+    "دورة الشوؤن الأدارية":"<@1059976190988910772>",
+    "شوؤن توظيف الكراج":"<@1271182726179061915>",
+    "البحث والإنقاذ":"<@1243196849372790916>"
+  };
+
+  function normalizeToMentions(input){
+    if(input === null || input === undefined) return '( - )';
+    const raw = input.toString().trim();
+    if(raw.length === 0) return '( - )';
+    if(raw.toLowerCase() === 'لايوجد') return 'لايوجد';
+    const parts = raw.split(/\s+/);
+    const out = parts.map(part => {
+      if(/^<@[^>]+>$/.test(part)) return part;
+      if(/^@(.+)$/.test(part)){
+        const id = part.replace(/^@/, '');
+        return `<@${id}>`;
       }
-
-      const signature = '<@1243196849372790916>';
-      const copyTo = '<@&1071933354976493650>';
-      const follow = '<@&1149742928953086105>';
-      const info = '<@&1071933352497664010>';
-
-      // عنوان اسم الدورة ورقمها داخل **`...`**
-      const header = `**\`  اسم الدورة ( ${course} ) (${courseNum}) \`**\n\n`;
-
-      // بداية النص: بسملة ثم سطرين فراغ ثم "اما بعد .."
-      let text = `***﷽***\n\n\n***اما بعد ..***\n`;
-      // العنوان + الدرجات
-      text += header;
-      text += block('***10 / 10 ***', g10);
-
-      text += block('***10 / 09 ***', g9);
-
-      text += block('***10 / 08 ***', g8);
-
-      text += block('***10 / 07 ***', g7);
-
-
-      // الخط الفاصل المطلوب بعد النتائج وقبل بقية المعلومات
-      text += '---------------------------------------------------------------------------------------\n\n';
-
-      // معلومات الشرح والمسؤولين (ديناميكية)
-      text += `***شرح :*** ${explMention ? explMention : '( - )'}\n`;
-
-      text += `***مسؤول الدورة :*** ${respMentions ? respMentions : '( - )'}\n`;
-
-      text += `***نائب مسؤول الدورة :*** ${depMentions ? depMentions : '( - )'}\n\n`;
-
-      // قنوات التوقيع والنسخ والمتابعة
-      text += `***التوقيع واعتماد :*** ${signature}\n`;
-
-      text += `***نسخة الى/*** ${copyTo}\n`;
-
-      text += `***للمتابعة والتنفيذ :*** ${follow}\n`;
-
-      text += `***للعلم و الاحاطة :*** ${info}\n`;
-
-      document.getElementById('outputResults').value = text;
-    }
-
-    // Toggle لفتح/إغلاق بطاقة النتائج مع تأثير بسيط
-    function openResultsToggle(prefillCourse='', prefillCourseNumber=''){
-      const card = document.getElementById('resultsCard');
-      const isVisible = card.classList.contains('show');
-      if(isVisible){
-        card.classList.remove('show');
-        card.classList.add('hide');
-        setTimeout(()=>{ card.classList.remove('hide'); card.style.display = 'none'; }, 220);
-      } else {
-        card.style.display = 'block';
-        requestAnimationFrame(()=> card.classList.add('show'));
-        if(prefillCourse){ document.getElementById('courseNameResults').value = prefillCourse; }
-        if(prefillCourseNumber){ document.getElementById('courseNumberResults').value = prefillCourseNumber; }
-        card.scrollIntoView({behavior:'smooth', block:'center'});
+      if(/^[\dA-Za-z_-]+$/.test(part)){
+        return `<@${part}>`;
       }
-    }
+      return part;
+    });
+    return out.join(' ');
+  }
 
-    // مساعدات للنموذجين الآخرين
-    function toAngleSingle(val){
-      if(!val) return '';
-      const cleaned = String(val).trim().replace(/<@|>|@/g,'');
-      return `<@${cleaned}>`;
-    }
-    function toAngleList(val){
-      if(!val) return '';
-      if(val.trim().toLowerCase()==='لايوجد') return 'لايوجد';
-      return val.split(/\s+/).filter(Boolean).map(s=>`<@${s.replace(/<@|>|@/g,'')}>`).join(' ');
-    }
+  function generateBasic(){
+    const seq = document.getElementById('sequenceBasic').value || '';
+    const course = document.getElementById('courseNameBasic').value || '';
+    const num = document.getElementById('numBasic').value || '';
+    const url = document.getElementById('urlBasic').value || '';
+    const explRaw = document.getElementById('explBasic').value || '';
+    const corrRaw = document.getElementById('corrBasic').value || '';
+    const trainersRaw = document.getElementById('trainersBasic').value || '';
+    const othersRaw = document.getElementById('othersBasic').value || '';
 
-    function generateBasic(){
-      const seq = document.getElementById('sequenceBasic').value || '';
-      const course = document.getElementById('courseNameBasic').value || '';
-      const num = document.getElementById('courseNumberBasic').value || '';
-      const expl = toAngleSingle(document.getElementById('explainerBasic').value || '');
-      const corr = toAngleSingle(document.getElementById('correctorBasic').value || '');
-      const trainers = toAngleList(document.getElementById('trainersBasic').value || '');
-      const others = toAngleList(document.getElementById('othersBasic').value || '');
-      const url = document.getElementById('resultsBasic').value || '';
-      const sig = sigMap[course] || '<@571068478753341453>';
+    const expl = normalizeToMentions(explRaw);
+    const corr = normalizeToMentions(corrRaw);
+    const trainers = normalizeToMentions(trainersRaw);
+    const others = normalizeToMentions(othersRaw);
 
-      const text = `*** نموذج الأنتهاء من الدورة واعتماد النتائج وطلب تسليم رول ***
+    const sig = sigMap[course] || '<@571068478753341453>';
+
+    const text = `*** نموذج الأنتهاء من الدورة واعتماد النتائج وطلب تسليم رول ***
 
 \`- تم تعبية جداول رسوم الدورات في مجلد الخاص في دورة (${course}) رقم التسلسل (${seq}) قبل ارسال هاذا التقرير :\`
 
-*** \` نوع الدورة : \`( أساسية )***
+*** \` نوع الدورة : \`***  ***( أساسية )***
 
-*** \` اسم الدورة : \` ( ${course} )***
+*** \` اسم الدورة : \`***  ***( ${course} )***
 
-*** \` رقم الدورة : \` ( ${num} )***
+*** \` رقم الدورة : \`***   ***( ${num} )***
 
-*** \`تم شرح الدورة من قبل  :\`   ( ${expl} )***
+*** \`تم شرح الدورة من قبل  :\`***   ***( ${expl} )***
 
-*** \`تم تصحيح الاختبار من قبل  :\`  ( ${corr} )***
+*** \`تم تصحيح الاختبار من قبل  :\`***  ***( ${corr} )***
 
-*** \`المدربين المتفاعلين : \`***   ( ${trainers} )
+*** \`المدربين المتفاعلين : \`***   ***( ${trainers} )***
 
-*** \` باقي المدربين :\`  ( ${others} )
+*** \` باقي المدربين :\`***  ***( ${others} )***
 
-*** \`نوع الطلب : \`***   اعطاء رول ( ${course} )(${url}) 
+*** \`نوع الطلب : \`***   اعطاء رول ***( ${course} )(${url})*** 
 
-*** \` توقيع واعتماد :\` ${sig} ***
+*** \` توقيع واعتماد :\` ${sig}***
 
-*** \` للعلم :\` <@1182445629721563177> ***
+*** \` للعلم :\` <@1182445629721563177>***
 
 \`\`\`diff
 - ملاحظه يتم ارفاق صوره الإداع المبلغ في الخزنه
 \`\`\``;
 
-      document.getElementById('outputBasic').value = text;
+    document.getElementById('outputBasic').value = text;
+  }
+
+  document.getElementById('createBasic').addEventListener('click', generateBasic);
+  document.getElementById('copyBasic').addEventListener('click', ()=> {
+    const txt = document.getElementById('outputBasic').value;
+    if(!txt){ alert('لا يوجد نص لنسخه'); return; }
+    navigator.clipboard.writeText(txt).then(()=> alert('تم النسخ'));
+  });
+
+  function generateSpecial(){
+    const seq = document.getElementById('sequenceSpecial').value || '';
+    const course = document.getElementById('courseNameSpecial').value || '';
+    const techRaw = document.getElementById('techSpecial').value || '';
+    const explRaw = document.getElementById('explSpecial').value || '';
+    const grade = document.getElementById('gradeSpecial').value || '';
+
+    const techMention = normalizeToMentions(techRaw);
+    const explMention = normalizeToMentions(explRaw);
+
+    let gradeLine = '';
+    if(grade && grade !== 'لايوجد'){
+      gradeLine = `*** \` درجة الاختبار : \`*** ${grade}\n\n`;
     }
 
-    function generateSpecial(){
-      const seq = document.getElementById('sequenceSpecial').value || '';
-      const course = document.getElementById('courseNameSpecial').value || '';
-      const tech = document.getElementById('technicianSpecial').value || '';
-      const expl = document.getElementById('explainerSpecial').value || '';
-      const gradeSelect = document.getElementById('examSpecial').value || '';
-      const gradeTextInput = document.getElementById('examSpecialText').value || '';
-      let gradeRaw = '';
-      if(gradeTextInput.trim()) gradeRaw = gradeTextInput.trim();
-      else if(gradeSelect) gradeRaw = gradeSelect.trim();
+    const sig = sigMap[course] || '<@571068478753341453>';
 
-      const gradeNormalized = gradeRaw.toLowerCase().replace(/\s+/g,'');
-      const shouldOmitGrade = (gradeNormalized === 'لايوجد' || gradeNormalized === 'لايوجد.' || gradeRaw === '');
-
-      const techMention = tech ? `<@${String(tech).trim().replace(/<@|>|@/g,'')}>` : '';
-      const explMention = expl ? `<@${String(expl).trim().replace(/<@|>|@/g,'')}>` : '';
-      const sig = sigMap[course] || "<@571068478753341453>";
-      const gradeLine = shouldOmitGrade ? '' : `*** \`درجه الاختبار  :\` ( ${gradeRaw}|10 )\n`;
-
-      const text = `*** نموذج الأنتهاء من الدورة الاستثنائية ***
+    const text = `*** نموذج الأنتهاء من الدورة الاستثنائية ***
 
 \`- تم تعبية جداول رسوم الدورات في مجلد الدورة الاستثنائية في دورة (${course}) رقم التسلسل (${seq}) قبل ارسال هاذا التقرير :\`
 
-*** \` اسم الدورة : \` ( ${course} )***
+*** \` اسم الدورة : \`*** ***( ${course} )***
 
-*** \` تم إقامه الدورة للفني : \` ${techMention}***
+*** \` تم إقامه الدورة للفني : \`*** ***${techMention}***
 
-*** \`تم شرح الدورة من قبل  :\`   ${explMention}***
+*** \`تم شرح الدورة من قبل  :\`***   ***${explMention}***
 
-${gradeLine}*** \`نوع الطلب  :\`***   اعطاء رول ( ${course} ) 
+${gradeLine}*** \`نوع الطلب  :\`***   ***اعطاء رول ( ${course} ) 
 
 *** \` توقيع واعتماد :\` ${sig} ***`;
 
-      document.getElementById('outputSpecial').value = text;
+    document.getElementById('outputSpecial').value = text;
+  }
+
+  document.getElementById('createSpecial').addEventListener('click', generateSpecial);
+  document.getElementById('copySpecial').addEventListener('click', ()=> {
+    const txt = document.getElementById('outputSpecial').value;
+    if(!txt){ alert('لا يوجد نص لنسخه'); return; }
+    navigator.clipboard.writeText(txt).then(()=> alert('تم النسخ'));
+  });
+
+  function formatMentionsVertical(input){
+    if(!input) return '';
+    const raw = input.trim();
+    if(raw.toLowerCase() === 'لايوجد') return 'NO_FIELD';
+    const parts = raw.split(/\s+/).map(p => {
+      if(/^<@[^>]+>$/.test(p)) return p;
+      if(/^@(.+)$/.test(p)) return `<@${p.replace(/^@/,'')}>`;
+      if(/^[\dA-Za-z_-]+$/.test(p)) return `<@${p}>`;
+      return p;
+    });
+    return parts.join('\n');
+  }
+
+  // العنوان الآن بالصيغة الدقيقة التي طلبتها: **`  اسم الدورة (  ) (رقم الدورة) `**
+  function generateResults(){
+    const course = document.getElementById('courseNameResults').value || '';
+    const courseNum = (document.getElementById('resultsNum') && document.getElementById('resultsNum').value.trim()) || '';
+
+    const titleCourse = course || '';
+
+    const g10 = formatMentionsVertical(document.getElementById('grade10').value || '');
+    const g9  = formatMentionsVertical(document.getElementById('grade9').value || '');
+    const g8  = formatMentionsVertical(document.getElementById('grade8').value || '');
+    const g7  = formatMentionsVertical(document.getElementById('grade7').value || '');
+
+    const explRaw = document.getElementById('resultsExplainer').value || '';
+    const respRaw = document.getElementById('resultsResponsible').value || '';
+    const depRaw  = document.getElementById('resultsDeputy').value || '';
+
+    const expl = explRaw ? normalizeToMentions(explRaw) : '( - )';
+    const resp = respRaw ? respRaw.split(/\s+/).map(id => {
+      if(/^<@[^>]+>$/.test(id)) return id;
+      if(/^@(.+)$/.test(id)) return `<@${id.replace(/^@/,'')}>`;
+      if(/^[\dA-Za-z_-]+$/.test(id)) return `<@${id}>`;
+      return id;
+    }).join(' ') : '( - )';
+    const dep  = depRaw ? depRaw.split(/\s+/).map(id => {
+      if(/^<@[^>]+>$/.test(id)) return id;
+      if(/^@(.+)$/.test(id)) return `<@${id.replace(/^@/,'')}>`;
+      if(/^[\dA-Za-z_-]+$/.test(id)) return `<@${id}>`;
+      return id;
+    }).join(' ') : '( - )';
+
+    const signature = '<@1243196849372790916>';
+    const copyTo = '<@&1071933354976493650>';
+    const follow = '<@&1149742928953086105>';
+    const info = '<@&1071933352497664010>';
+
+    function block(label, data){
+      if(!data || data === 'NO_FIELD') return '';
+      return `${label}\n${data}\n\n`;
     }
 
-    // تهيئة الواجهة
-    document.addEventListener('DOMContentLoaded', function(){
-      const basicBtn = document.getElementById('showBasic');
-      const specialBtn = document.getElementById('showSpecial');
-      const basicCard = document.getElementById('basicCard');
-      const specialCard = document.getElementById('specialCard');
-      const resultsCard = document.getElementById('resultsCard');
+    // هنا نركب السطر بالصيغة المطلوبة حرفياً: نجوم + باكتيك + مسافات كما طلبت
+    // الناتج النهائي مثال: **`  اسم الدورة ( ورشة التصنيع ) (7) `**
+    const titleLine = course
+      ? '**`  اسم الدورة ( ' + titleCourse + ' ) ' + (courseNum ? '(' + courseNum + ')' : '') + ' `**'
+      : '**`  اسم الدورة ( - ) `**';
 
-      function showCard(which){
-        basicCard.style.display = 'none';
-        specialCard.style.display = 'none';
-        resultsCard.style.display = 'none';
-        basicBtn.classList.remove('active');
-        specialBtn.classList.remove('active');
+    let text = `***﷽***
 
-        if(which === 'basic'){
-          basicCard.style.display = 'block';
-          basicBtn.classList.add('active');
-        } else if(which === 'special'){
-          specialCard.style.display = 'block';
-          specialBtn.classList.add('active');
-        }
-      }
-      showCard('basic');
+***اما بعد ..***
 
-      basicBtn.addEventListener('click', ()=> showCard('basic'));
-      specialBtn.addEventListener('click', ()=> showCard('special'));
+${titleLine}
 
-      document.getElementById('createBasic').addEventListener('click', generateBasic);
-      document.getElementById('copyBasic').addEventListener('click', ()=> copyText('outputBasic'));
-      document.getElementById('createSpecial').addEventListener('click', generateSpecial);
-      document.getElementById('copySpecial').addEventListener('click', ()=> copyText('outputSpecial'));
+${block('***10 / 10***', g10)}
+${block('***10 / 09***', g9)}
+${block('***10 / 08***', g8)}
+${block('***10 / 07***', g7)}
 
-      // فتح/إغلاق نموذج النتائج من زر الأساسية
-      document.getElementById('openResultsFromBasic').addEventListener('click', function(){
-        const course = document.getElementById('courseNameBasic').value || '';
-        const num = document.getElementById('courseNumberBasic').value || '';
-        openResultsToggle(course, num);
-      });
+-------------------------------------------------------------
 
-      // أزرار النتائج
-      document.getElementById('createResults').addEventListener('click', ()=> generateResults());
-      document.getElementById('copyResults').addEventListener('click', ()=> copyText('outputResults'));
+***شرح :*** ${expl}
 
-      // سلوك الدبوس: فتح/اغلاق + تأثير السحب التفاعلي
-      const pinToggle = document.getElementById('pinToggle');
-      const pinMenu = document.getElementById('pinMenu');
-      const pin = document.querySelector('.pin');
+***مسؤول الدورة :*** ${resp}
 
-      function openPin(){ pinMenu.classList.add('open'); pinToggle.setAttribute('aria-expanded','true'); pinMenu.setAttribute('aria-hidden','false'); }
-      function closePin(){ pinMenu.classList.remove('open'); pinToggle.setAttribute('aria-expanded','false'); pinMenu.setAttribute('aria-hidden','true'); pin.classList.remove('pulling'); pinMenu.classList.remove('pulled'); }
+***نائب مسؤول الدورة :*** ${dep}
 
-      pinToggle.addEventListener('click', function(e){ e.stopPropagation(); if(pinMenu.classList.contains('open')) closePin(); else openPin(); });
+***التوقيع واعتماد :*** ${signature}
 
-      // التفاعل السحبي: عند الضغط المطول (mousedown / touchstart) يظهر تأثير السحب، وعند الإفلات يعود
-      let pullTimeout = null;
-      function startPullInteraction(e){
-        e.preventDefault();
-        pin.classList.add('pulling');
-        // بعد 80ms نضيف تأثير "مسحوب" على القائمة لتبدو وكأنها سحبت للخارج
-        pullTimeout = setTimeout(()=> {
-          pinMenu.classList.add('pulled');
-          // نضمن أن القائمة مرئية أثناء السحب
-          pinMenu.classList.add('open');
-          pinToggle.setAttribute('aria-expanded','true');
-          pinMenu.setAttribute('aria-hidden','false');
-        }, 80);
-      }
-      function endPullInteraction(){
-        clearTimeout(pullTimeout);
-        pin.classList.remove('pulling');
-        // نرجع التأثير تدريجياً
-        pinMenu.classList.remove('pulled');
-        // نترك القائمة مفتوحة بعد السحب، أو نغلقها إذا كانت مفتوحة مسبقاً؟ نتركها مفتوحة لتسهيل الوصول
-      }
+***نسخة الى :*** ${copyTo}
+***للمتابعة والتنفيذ :*** ${follow}
+***للعلم والاحاطة :*** ${info}
+`;
 
-      // دعم الفأرة
-      pinToggle.addEventListener('mousedown', startPullInteraction);
-      document.addEventListener('mouseup', endPullInteraction);
-      // دعم اللمس
-      pinToggle.addEventListener('touchstart', startPullInteraction, {passive:false});
-      document.addEventListener('touchend', endPullInteraction);
+    document.getElementById('outputResults').value = text;
+  }
 
-      // تبويبات الدبوس
-      const pinTabs = document.querySelectorAll('.pin-tab');
-      const pinSections = document.querySelectorAll('.pin-section');
-      pinTabs.forEach(tab=>{
-        tab.addEventListener('click', ()=>{
-          pinTabs.forEach(t=>{ t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
-          tab.classList.add('active'); tab.setAttribute('aria-selected','true');
-          const target = tab.getAttribute('data-section');
-          pinSections.forEach(sec=>{
-            if(sec.getAttribute('data-section') === target) sec.style.display = '';
-            else sec.style.display = 'none';
-          });
-        });
-      });
+  document.getElementById('createResults').addEventListener('click', generateResults);
+  document.getElementById('copyResults').addEventListener('click', ()=> {
+    const txt = document.getElementById('outputResults').value;
+    if(!txt){ alert('لا يوجد نص لنسخه'); return; }
+    navigator.clipboard.writeText(txt).then(()=> alert('تم النسخ'));
+  });
 
-      // أزرار نسخ الروابط داخل الدبوس
-      const copyButtons = document.querySelectorAll('.copy-link-btn');
-      copyButtons.forEach(btn=>{
-        btn.addEventListener('click', (e)=>{
-          e.stopPropagation();
-          const url = btn.getAttribute('data-url') || '';
-          if(!url){ alert('لا يوجد رابط للنسخ'); return; }
-          navigator.clipboard.writeText(url).then(()=>{
-            const original = btn.innerHTML;
-            btn.innerHTML = 'تم النسخ <span class="copy-icon">✅</span>';
-            setTimeout(()=> btn.innerHTML = original, 1200);
-          }).catch(()=> alert('فشل النسخ'));
-        });
-      });
+  function selectType(which){
+    document.getElementById('basicCard').style.display = (which === 'basic') ? 'block' : 'none';
+    document.getElementById('specialCard').style.display = (which === 'special') ? 'block' : 'none';
+    document.getElementById('resultsCard').style.display = (which === 'results') ? 'block' : 'none';
+  }
 
-      document.addEventListener('click', function(e){
-        const inside = pinMenu.contains(e.target) || pinToggle.contains(e.target);
-        if(!inside) closePin();
-      });
-      document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closePin(); });
+  document.getElementById('typeSelect').addEventListener('change', function(){
+    selectType(this.value);
+  });
+
+  document.querySelectorAll('.choice-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      selectType(btn.dataset.select);
+      document.getElementById('intro').style.display = 'none';
     });
-  </script>
+  });
+
+  document.getElementById('introClose').addEventListener('click', ()=>{
+    document.getElementById('intro').style.display = 'none';
+  });
+
+  document.getElementById('sideBtn').addEventListener('click', function(e){
+    const menu = document.getElementById('menu');
+    menu.classList.toggle('open');
+  });
+
+  document.querySelectorAll('.menu-copy').forEach(btn=>{
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      const url = btn.getAttribute('data-url') || '';
+      if(!url){ alert('لا يوجد رابط للنسخ'); return; }
+      navigator.clipboard.writeText(url).then(()=> {
+        const original = btn.innerHTML;
+        btn.innerHTML = 'تم النسخ';
+        setTimeout(()=> btn.innerHTML = original, 1200);
+      }).catch(()=> alert('فشل النسخ'));
+    });
+  });
+</script>
 </body>
 </html>
+
+
 
 
